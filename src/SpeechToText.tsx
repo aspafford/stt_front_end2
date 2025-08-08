@@ -3,13 +3,14 @@ import TranscriptionDisplay from './components/TranscriptionDisplay';
 import RecordButton from './components/RecordButton';
 import StatusIndicator from './components/StatusIndicator';
 import { useRecorder } from './hooks/useRecorder';
+import { transcribeAudio } from './services/api';
 import styles from './SpeechToText.module.css';
 
 type Status = 'idle' | 'recording' | 'loading' | 'error';
 
 const SpeechToText: React.FC = () => {
   const [status, setStatus] = useState<Status>('idle');
-  const [transcription] = useState<string>('');
+  const [transcription, setTranscription] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
   const { 
     status: recorderStatus, 
@@ -29,28 +30,41 @@ const SpeechToText: React.FC = () => {
     }
   }, [recorderStatus, recorderError]);
 
-  // Log audio blob when it's created
+  // Process audio blob when it's created
   useEffect(() => {
     if (audioBlob) {
       console.log('Audio capture successful:', {
         size: audioBlob.size,
         type: audioBlob.type
       });
+      // Process the audio blob through the API
+      handleTranscription(audioBlob);
     }
   }, [audioBlob]);
+
+  const handleTranscription = async (blob: Blob) => {
+    setStatus('loading');
+    try {
+      const text = await transcribeAudio(blob);
+      setTranscription(text);
+      setStatus('idle');
+      setError(null);
+    } catch (err) {
+      setStatus('error');
+      setError('Transcription service is currently unavailable. Please try again later.');
+      console.error('Transcription error:', err);
+    }
+  };
 
   const handleRecordClick = async () => {
     switch (status) {
       case 'idle':
+        setTranscription(''); // Clear previous transcription
         await startRecording();
         break;
       case 'recording':
-        setStatus('loading');
         stopRecording();
-        // Simulate processing time, then return to idle
-        setTimeout(() => {
-          setStatus('idle');
-        }, 1000);
+        // Audio blob processing will be handled by the useEffect
         break;
       case 'error':
         setStatus('idle');
