@@ -30,4 +30,13 @@ describe('RecordButton', () => {
     const button = screen.getByRole('button', { name: /try again/i })
     expect(button).toBeInTheDocument()
   })
+
+  it('renders "Processing..." text and is disabled when status is loading', () => {
+    const mockOnClick = vi.fn()
+    render(<RecordButton status="loading" onClick={mockOnClick} />)
+    
+    const button = screen.getByRole('button', { name: /processing.../i })
+    expect(button).toBeInTheDocument()
+    expect(button).toBeDisabled()
+  })
 })

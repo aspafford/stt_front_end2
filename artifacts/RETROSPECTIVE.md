@@ -52,3 +52,32 @@ Successfully built the complete static UI for the speech-to-text component follo
 - **Component Testing**: The component-specific test approach provided excellent coverage - continue this pattern for future components
 - **Accessibility**: Consider adding ARIA labels and keyboard navigation support in future interactive milestones
 - **Animation System**: The foundation is laid for the micro-interactions specified in Creative Specification - CSS custom properties for transitions are ready for implementation
+
+## Milestone 3 - Core State Management & UI Logic
+**Completed**: 2025-08-08
+
+### Summary
+Successfully implemented the complete state machine for the speech-to-text component with four states (`idle`, `recording`, `loading`, `error`) and dynamic UI logic. All components now respond to state changes with appropriate visual feedback, button text/icon updates, and error handling. Added comprehensive test coverage for all state scenarios and a temporary developer button for testing error states.
+
+### Challenges
+- **TypeScript Unused Variable**: Initially included `setTranscription` state setter but it's not needed until milestone 4. Fixed by removing unused variable to satisfy TypeScript compiler.
+- **Test Updates Required**: Existing StatusIndicator test expected "Error occurred" text, but milestone spec only requires "Recording..." text for recording state. Updated test to match specification.
+- **ESLint Configuration Issue**: ESLint plugin dependency seems to be missing, but TypeScript compiler provides sufficient type checking for this milestone.
+- **Icon Accessibility**: Had to add proper ARIA roles to AlertTriangle icon to make error state tests work correctly.
+
+### Technical Notes
+- State management uses React useState with proper TypeScript typing for Status union type
+- handleRecordClick function implements all state transitions with setTimeout for loading simulation
+- RecordButton component includes disabled state, loading spinner with CSS animation, and conditional hover effects
+- TranscriptionDisplay component conditionally renders error state with AlertTriangle icon and proper spacing
+- StatusIndicator simplified to only show "Recording..." text during recording state
+- Test coverage includes all component states and error scenarios with proper accessibility testing
+- Added developer test button with inline styling for easy error state verification
+
+### Future Improvements
+- **State Machine Library**: For more complex state logic in future milestones, consider using a formal state machine library like XState
+- **Loading Animation**: The current CSS spinner could be replaced with a more sophisticated loading animation matching the vibrant theme
+- **Error Recovery**: The current error handling is basic - future milestones could include retry mechanisms and more detailed error types
+- **Test Organization**: Tests could be grouped by behavior (state transitions vs. rendering) for better organization
+- **Dependency Management**: The ESLint plugin issue should be resolved for better code quality enforcement
+- **Animation Timing**: The 1-second loading timeout is arbitrary - should be replaced with actual API call timing in future milestones

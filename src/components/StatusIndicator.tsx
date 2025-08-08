@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface StatusIndicatorProps {
-  status: 'idle' | 'recording' | 'error';
+  status: 'idle' | 'recording' | 'loading' | 'error';
 }
 
 const StatusIndicator: React.FC<StatusIndicatorProps> = ({ status }) => {
@@ -9,8 +9,6 @@ const StatusIndicator: React.FC<StatusIndicatorProps> = ({ status }) => {
     switch (status) {
       case 'recording':
         return 'Recording...';
-      case 'error':
-        return 'Error occurred';
       default:
         return '';
     }

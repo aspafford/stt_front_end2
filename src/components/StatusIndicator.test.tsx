@@ -15,10 +15,13 @@ describe('StatusIndicator', () => {
     expect(statusText).toBeInTheDocument()
   })
 
-  it('renders "Error occurred" text when status is error', () => {
-    render(<StatusIndicator status="error" />)
-    
-    const errorText = screen.getByText(/error occurred/i)
-    expect(errorText).toBeInTheDocument()
+  it('renders nothing when status is error', () => {
+    const { container } = render(<StatusIndicator status="error" />)
+    expect(container.firstChild).toBeNull()
+  })
+
+  it('renders nothing when status is loading', () => {
+    const { container } = render(<StatusIndicator status="loading" />)
+    expect(container.firstChild).toBeNull()
   })
 })
