@@ -23,7 +23,9 @@
       "Bash(npm run test:e2e:*)",
       "Bash(mv:*)",
       "Bash(pkill:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(^C)",
+      "Bash(npx playwright test:*)"
     ],
     "deny": []
   }

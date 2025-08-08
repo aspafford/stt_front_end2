@@ -81,3 +81,30 @@ Successfully implemented the complete state machine for the speech-to-text compo
 - **Test Organization**: Tests could be grouped by behavior (state transitions vs. rendering) for better organization
 - **Dependency Management**: The ESLint plugin issue should be resolved for better code quality enforcement
 - **Animation Timing**: The 1-second loading timeout is arbitrary - should be replaced with actual API call timing in future milestones
+
+## Milestone 4 - Microphone Integration & Audio Capture
+**Completed**: 2025-08-08
+
+### Summary
+Successfully integrated the browser's MediaRecorder API to handle microphone permissions and capture audio data. Created a custom useRecorder hook that encapsulates all MediaRecorder logic, manages state, and properly handles permission errors. The component now requests microphone access on first click, records audio into a Blob format suitable for the transcription API, and properly releases microphone resources when stopping. All acceptance criteria met with proper console logging for audio blob verification.
+
+### Challenges
+- **E2E Test Browser Permissions**: The `context.grantPermissions(['microphone'])` API doesn't work consistently across all browsers (Firefox and WebKit don't support it). Resolved by focusing E2E tests on the error state simulation button for cross-browser compatibility.
+- **Vitest Running E2E Tests**: Initially placed E2E test in wrong directory (`e2e/`) causing Vitest to attempt running Playwright tests. Fixed by moving to correct `tests-e2e/` directory.
+- **MediaRecorder Browser Support**: MediaRecorder API works natively in modern browsers but actual permission prompting cannot be bypassed in E2E tests due to browser security. This is expected behavior.
+
+### Technical Notes
+- useRecorder hook manages MediaRecorder instance with useRef to persist across renders
+- Audio captured as `audio/webm` format Blob, suitable for streaming to transcription API
+- Proper cleanup implemented: media stream tracks are stopped when recording ends to release microphone
+- State synchronization between useRecorder hook and main component using useEffect
+- Console logging added to verify audio blob creation with size and type information
+- Error handling gracefully manages permission denial with user-friendly message
+
+### Future Improvements
+- **E2E Testing Strategy**: Consider using mock MediaRecorder for more comprehensive E2E testing without actual browser permissions
+- **Audio Format Flexibility**: The hardcoded `audio/webm` format might not be optimal for all transcription APIs - consider making this configurable
+- **Recording Indicator**: While the UI shows recording state, adding a browser-native recording indicator (red dot in tab) verification would enhance user trust
+- **Permission State Monitoring**: Could implement `navigator.permissions.query()` to proactively check microphone permission state before user clicks
+- **Audio Visualization**: Adding a real-time audio waveform or volume meter during recording would provide better user feedback
+- **Chunk-based Streaming**: Current implementation waits for full recording to complete - future milestones could stream audio chunks for real-time transcription
