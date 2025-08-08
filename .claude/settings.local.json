@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(docker build:*)",
+      "Bash(docker run:*)",
+      "Bash(curl:*)",
+      "Bash(docker stop:*)",
+      "Bash(docker rm:*)",
+      "Bash(git add:*)",
+      "Bash(docker logs:*)",
+      "Bash(touch:*)",
+      "Bash(docker compose:*)",
+      "Bash(cp:*)",
+      "Bash(npm install)",
+      "Bash(npm install:*)",
+      "Bash(npm run dev:*)",
+      "Bash(npm test:*)",
+      "Bash(grep:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm run lint)"
+    ],
+    "deny": []
+  }
+}
