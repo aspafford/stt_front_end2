@@ -33,11 +33,6 @@ const SpeechToText: React.FC = () => {
   // Process audio blob when it's created
   useEffect(() => {
     if (audioBlob) {
-      console.log('Audio capture successful:', {
-        size: audioBlob.size,
-        type: audioBlob.type
-      });
-      // Process the audio blob through the API
       handleTranscription(audioBlob);
     }
   }, [audioBlob]);
@@ -52,7 +47,6 @@ const SpeechToText: React.FC = () => {
     } catch (err) {
       setStatus('error');
       setError('Transcription service is currently unavailable. Please try again later.');
-      console.error('Transcription error:', err);
     }
   };
 
@@ -73,24 +67,12 @@ const SpeechToText: React.FC = () => {
     }
   };
 
-  // Developer-only function to test error state
-  const handleTestError = () => {
-    setStatus('error');
-    setError('Could not access microphone. Please check your browser settings and grant permission.');
-  };
 
   return (
     <div className={styles.container}>
       <TranscriptionDisplay text={transcription} error={error} status={status} />
       <RecordButton status={status} onClick={handleRecordClick} />
       <StatusIndicator status={status} />
-      {/* Temporary developer button for testing error state */}
-      <button 
-        onClick={handleTestError}
-        style={{ marginTop: '16px', padding: '8px 16px', backgroundColor: '#dc3545', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
-      >
-        Test Error State
-      </button>
     </div>
   );
 };

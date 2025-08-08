@@ -43,17 +43,11 @@ export const useRecorder = (): UseRecorderReturn => {
           streamRef.current.getTracks().forEach(track => track.stop());
           streamRef.current = null;
         }
-
-        console.log('Audio Blob created:', {
-          size: audioBlob.size,
-          type: audioBlob.type
-        });
       };
 
       mediaRecorder.start();
       setStatus('recording');
     } catch (err) {
-      console.error('Error accessing microphone:', err);
       setStatus('error');
       setError('Could not access microphone. Please check your browser settings and grant permission.');
     }

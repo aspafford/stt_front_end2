@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { AlertTriangle } from 'lucide-react';
+import styles from './TranscriptionDisplay.module.css';
 
 interface TranscriptionDisplayProps {
   text: string;
@@ -9,27 +10,46 @@ interface TranscriptionDisplayProps {
 
 const TranscriptionDisplay: React.FC<TranscriptionDisplayProps> = ({ text, error, status }) => {
   const showError = status === 'error' && error;
+  const [previousText, setPreviousText] = useState(text);
+  const [animateText, setAnimateText] = useState(false);
+
+  useEffect(() => {
+    if (text !== previousText && text) {
+      setAnimateText(true);
+      setPreviousText(text);
+      const timer = setTimeout(() => setAnimateText(false), 300);
+      return () => clearTimeout(timer);
+    }
+  }, [text, previousText]);
+
+  const getContainerClass = () => {
+    let classes = styles.container;
+    if (status === 'loading') {
+      classes += ` ${styles.loading}`;
+    }
+    return classes;
+  };
+
+  const getTextClass = () => {
+    if (showError) return '';
+    if (text) {
+      return animateText ? styles.transcriptionText : '';
+    }
+    return styles.placeholder;
+  };
   
   return (
-    <div 
-      style={{
-        backgroundColor: 'var(--neutral-200)',
-        border: '1px solid var(--neutral-400)',
-        borderRadius: 'var(--border-radius-area)',
-        padding: 'var(--space-3)',
-        minHeight: 'var(--transcription-area-min-height)',
-        fontSize: 'var(--font-size-transcription)',
-        fontWeight: 'var(--font-weight-regular)',
-        lineHeight: 'var(--line-height-transcription)',
-        color: showError ? 'var(--system-error)' : (text ? 'var(--neutral-900)' : 'var(--neutral-700)'),
-        display: 'flex',
-        alignItems: 'flex-start',
-        gap: showError ? 'var(--space-2)' : '0',
-        fontFamily: 'var(--font-family)',
-      }}
-    >
-      {showError && <AlertTriangle size={20} style={{ flexShrink: 0, marginTop: '2px' }} role="img" aria-label="Alert" />}
-      {showError ? error : (text || "Click the button below to start recording. Your words will appear here.")}
+    <div className={getContainerClass()}>
+      {showError ? (
+        <div className={styles.error}>
+          <AlertTriangle size={20} className={styles.errorIcon} role="img" aria-label="Alert" />
+          <span>{error}</span>
+        </div>
+      ) : (
+        <div className={getTextClass()}>
+          {text || "Click the button below to start recording. Your words will appear here."}
+        </div>
+      )}
     </div>
   );
 };
