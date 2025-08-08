@@ -25,3 +25,30 @@ Successfully established a complete containerized development environment using 
 - **Container Optimization**: Dev container could specify more precise VS Code extension versions for better reproducibility
 - **Error Handling**: Better error handling for the interactive CLI prompts in automated environments
 - **Node Version**: Consider updating to Node.js 20.19+ to meet Vite's recommended engine requirements
+
+## Milestone 2 - Static UI Implementation & Componentization
+**Completed**: 2025-08-08
+
+### Summary
+Successfully built the complete static UI for the speech-to-text component following the "Kinetic & Vibrant" creative direction. Created three reusable components (TranscriptionDisplay, RecordButton, StatusIndicator) with proper styling based on the Creative Specification. Implemented comprehensive CSS custom properties system for consistent theming. All components are purely presentational with no interactive logic, representing the "Idle" state perfectly.
+
+### Challenges
+- **Test Assertion Issue**: Initial test for SpeechToText component had a regex collision where `/recording.../i` matched placeholder text containing "recording". Resolved by using more specific regex `/^recording\.\.\.$/i` to match exact status text.
+- **Component Architecture Decision**: Chose inline styles over styled-components to avoid additional dependencies and maintain direct connection to CSS custom properties from theme.css.
+- **Font Integration**: Successfully integrated Google Fonts Inter with proper preconnect optimization for performance.
+
+### Technical Notes
+- CSS custom properties defined in `src/styles/theme.css` provide centralized theming with variables for colors, typography, spacing, shadows, and transitions
+- TranscriptionDisplay component handles both empty and populated states with appropriate color variations
+- RecordButton component includes proper hover/active states with transform and shadow effects as specified
+- StatusIndicator component conditionally renders based on status prop (hidden in idle state)
+- All components use TypeScript interfaces for proper type safety
+- CSS Modules used for SpeechToText main container styling with proper isolation
+- Lucide React icons provide modern, consistent iconography (mic, stop-circle)
+
+### Future Improvements
+- **Hover Effects**: Consider extracting button hover logic into a custom hook for reusability if more interactive elements are added
+- **Theme Consistency**: The theme.css approach worked perfectly - this pattern should be maintained for future milestones
+- **Component Testing**: The component-specific test approach provided excellent coverage - continue this pattern for future components
+- **Accessibility**: Consider adding ARIA labels and keyboard navigation support in future interactive milestones
+- **Animation System**: The foundation is laid for the micro-interactions specified in Creative Specification - CSS custom properties for transitions are ready for implementation

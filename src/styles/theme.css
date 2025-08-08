@@ -1,0 +1,74 @@
+/* Color Palette */
+:root {
+  /* Primary Gradient */
+  --gradient-start: #8A2BE2;
+  --gradient-end: #FF00FF;
+
+  /* Neutral Palette */
+  --neutral-900: #1A1A1A;
+  --neutral-700: #555555;
+  --neutral-400: #DCDCDC;
+  --neutral-200: #F5F5F5;
+  --neutral-100: #FFFFFF;
+
+  /* System State Colors */
+  --system-error: #D93025;
+  --system-success: #1E8E3E;
+  --system-recording: #FF00FF;
+
+  /* Text on Primary/System Colors */
+  --text-on-dark: #FFFFFF;
+
+  /* Typography */
+  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  
+  /* Font Sizes */
+  --font-size-transcription: 1.1rem;
+  --font-size-button: 1rem;
+  --font-size-status: 0.875rem;
+  --font-size-placeholder: 1.1rem;
+
+  /* Font Weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+
+  /* Line Heights */
+  --line-height-transcription: 1.6;
+  --line-height-button: 1.5;
+  --line-height-status: 1.4;
+  --line-height-placeholder: 1.6;
+
+  /* Spacing System */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 32px;
+
+  /* Button Padding */
+  --button-padding: 12px 24px;
+
+  /* Border Radius */
+  --border-radius-container: 12px;
+  --border-radius-area: 8px;
+  --border-radius-button: 8px;
+
+  /* Shadows */
+  --shadow-container: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-button: 0 4px 12px rgba(138, 43, 226, 0.3);
+  --shadow-button-hover: 0 6px 16px rgba(138, 43, 226, 0.4);
+  --shadow-button-active: 0 2px 8px rgba(138, 43, 226, 0.3);
+
+  /* Transitions */
+  --transition-button: transform 0.2s ease, box-shadow 0.2s ease;
+  --transition-text-fade: opacity 300ms ease-in-out;
+
+  /* Component Dimensions */
+  --transcription-area-min-height: 120px;
+}
+
+/* Global Font Family */
+body {
+  font-family: var(--font-family);
+}
